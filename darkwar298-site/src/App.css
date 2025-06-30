@@ -1,0 +1,161 @@
+body, .app-container {
+  background: #000002;
+  color: #cfcfd1;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 270px;
+  background: #390405;
+  border-right: 3px solid #d31c20;
+  padding: 24px 12px 24px 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100vh;
+}
+
+.sidebar h2 {
+  color: #d31c20;
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.category {
+  margin-bottom: 10px;
+}
+
+.category-title {
+  color: #cfcfd1;
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 1.1rem;
+}
+
+.category ul {
+  list-style: none;
+  padding: 0 0 0 10px;
+  margin: 0;
+}
+
+.category li {
+  padding: 6px 10px;
+  margin-bottom: 2px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  color: #cfcfd1;
+}
+
+.category li.active, .category li:hover {
+  background: #5a0b0c;
+  color: #d31c20;
+  font-weight: bold;
+}
+
+.category-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.footer {
+  flex-shrink: 0;
+  width: 100%;
+  text-align: center;
+  color: #cfcfd1bb;
+  font-size: 1rem;
+  padding: 18px 0 0 0;
+  opacity: 0.7;
+  background: none;
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #000002;
+  min-width: 0;
+}
+
+.main-content h1 {
+  color: #d31c20;
+  font-size: 2.2rem;
+  margin-bottom: 18px;
+}
+
+.placeholder-img {
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 0 16px #d31c2080;
+  max-width: 100%;
+}
+
+.translate-widget {
+  position: absolute;
+  top: 18px;
+  right: 32px;
+  z-index: 9999;
+}
+
+.site-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #cfcfd1;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+  text-align: left;
+}
+
+@media (max-width: 800px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 3px solid #d31c20;
+    flex-direction: column;
+    overflow-x: auto;
+    padding: 12px 6px;
+    min-width: 0;
+    height: auto;
+    max-height: 50vh;
+  }
+  .site-title {
+    font-size: 1.3rem;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  .main-content {
+    padding: 18px 8px;
+    font-size: 1rem;
+  }
+  .translate-widget {
+    right: 8px;
+    top: 8px;
+    left: unset;
+    width: 100vw;
+    text-align: right;
+  }
+  .category-list {
+    max-height: 30vh;
+  }
+  .footer {
+    font-size: 0.95rem;
+    padding: 12px 0 0 0;
+  }
+}

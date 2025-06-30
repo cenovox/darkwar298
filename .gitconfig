@@ -1,0 +1,9 @@
+[user]
+  name = cenovox
+  email = cenovox298@gmail.com
+
+[core]
+  editor = nano
+
+[ssh]
+  identifyFile = ~/.ssh/id_ed25519_cenovo298
