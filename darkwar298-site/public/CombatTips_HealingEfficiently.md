@@ -1,0 +1,1 @@
+Hitting 'Select All' and healing all of your troops at once forces you to use speedups. Instead you should select a smaller number of troops, such as 30 or 60 minutes worth of troops to heal. All of your alliance members will help you finish this within seconds and you can do this a few times in a row to heal all of your troops without wasting speedups. 

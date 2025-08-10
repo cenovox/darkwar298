@@ -1,0 +1,1 @@
+Players can earn points from APC skirmishes as well as from capturing turrets and the capital building. Some alliances will focus on just skirmishing with APCs, while others will focus on objectives and try to hold the capital building to win the event or maximize points. 

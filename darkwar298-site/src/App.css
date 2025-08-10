@@ -98,9 +98,51 @@ body, .app-container {
 
 .placeholder-img {
   border-radius: 12px;
-  margin-bottom: 24px;
-  box-shadow: 0 0 16px #d31c2080;
-  max-width: 100%;
+}
+
+/* Tile Button Styles */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 32px 0;
+  width: 100%;
+}
+
+.tile-button {
+  background: linear-gradient(135deg, #390405 0%, #5a0b0c 100%);
+  border: 2px solid #d31c20;
+  border-radius: 12px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tile-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(211, 28, 32, 0.3);
+  border-color: #ff4444;
+  background: linear-gradient(135deg, #4a0506 0%, #6b0c0d 100%);
+}
+
+.tile-button h3 {
+  color: #d31c20;
+  margin: 0 0 12px 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.tile-button p {
+  color: #cfcfd1;
+  margin: 0;
+  line-height: 1.5;
+  font-size: 1rem;
 }
 
 .translate-widget {
@@ -157,5 +199,24 @@ body, .app-container {
   .footer {
     font-size: 0.95rem;
     padding: 12px 0 0 0;
+  }
+  
+  .tile-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  
+  .tile-button {
+    padding: 20px;
+    min-height: 140px;
+  }
+  
+  .tile-button h3 {
+    font-size: 1.2rem;
+  }
+  
+  .tile-button p {
+    font-size: 0.95rem;
   }
 }

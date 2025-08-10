@@ -1,55 +1,137 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useParams, useNavigate, Navigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import './App.css'
+
+// Redirect configuration
+const redirects = {
+  '/introduction': '/getting-started/introduction',
+  '/server-rules/what-is-nap15': '/server-rules/what-is-nap10',
+  '/other-events': '/events',
+  '/other-events/coming-soon': '/events/coming-soon',
+  
+  // Add more redirects here as needed
+  // '/old-path': '/new-category/new-section',
+};
 
 const categories = [
   {
     name: 'Getting Started',
+    path: 'getting-started',
     sections: [
-      { title: 'Introduction', markdown: `Welcome to the Server 298 Manual!\n\nThis is a guide to help you improve your combat skills in the game in preparation for the Capital Clash event and other server-versus-server events in the future.` },
+      { title: 'Introduction', path: 'introduction', markdownFile: '/GettingStarted_Introduction.md' },
+    ]
+  },
+  {
+    name: 'Server Rules (NAP10)',
+    path: 'server-rules',
+    sections: [
+      { title: 'Current Server Rules', path: 'current-rules', markdownFile: '/ServerRules_CurrentNAP10Rules.md' },
+      { title: 'What is NAP10 ?', path: 'what-is-nap10', markdownFile: '/ServerRules_WhatIsNAP10.md' },
+      { title: 'Changelog', path: 'changelog', markdownFile: '/ServerRules_Changelog.md' }
     ]
   },
   {
     name: 'Capital Clash',
+    path: 'capital-clash',
     sections: [
-      { title: 'About Capital Clash', markdown: `This is one of our most important events as a server, and determines who will be in charge as the president. We can all participate in the capital clash event to earn points for our alliances, and we need to make sure that an alliance we trust to take care of the server wins the overall event.` },
-      { title: 'Objectives', markdown: `Capital Clash has two main types of objectives, turrets and the capital building.\n## Capital Building\nThe capital building is the main objective for Capital Clash. Each alliance can defeat the defending toops to then occupy the capital building, similar to the armory fights we have done before. The progress for capture does not reset each time an alliance loses the capital, so if you capture 5% you will resume at 5% next time you enter. Each alliance should try to capture a turret or the capital building at least once to maximize event points for their players.\nTeams that occupt the capital building should focus on garrisoning troops inside to make sure they can defend it against attackers.\nTeams that are attacking the capital building should focus on launching multiple rallies at the same time in order to knock out all garrisoned troops before the building can be reinforced.\n\n## Turrets\nThere are four turrets surrounding the capital building. Each time one is captured, the alliance that occupies it can garrison troops inside the turret to defend it. The turrets will do damage to enemy troops garrisoned inside the capital building, and the turrets will fire faster the longer they have been held. Preventing your enemies from capturing the turrets ensures that you will have an easier time holding the main capital building for a longer period of time.` },
-      { title: 'Earning Points', markdown: `Players can earn points from APC skirmishes as well as from capturing turrets and the capital building. Some alliances will focus on just skirmishing with APCs, while others will focus on objectives and try to hold the capital building to win the event or maximize points.` },
-      { title: 'Strategy', markdown: `Coming soon!` },
+      { title: 'About Capital Clash', path: 'about', markdownFile: '/CapitalClash_About.md' },
+      { title: 'Objectives', path: 'objectives', markdownFile: '/CapitalClash_Objectives.md' },
+      { title: 'Earning Points', path: 'earning-points', markdownFile: '/CapitalClash_EarningPoints.md' },
+      { title: 'Strategy', path: 'strategy', markdownFile: '/CapitalClash_Strategy.md' },
     ]
   },
   {
     name: 'Combat Tips',
+    path: 'combat-tips',
     sections: [
-      { title: 'Defending your base', markdown: `When defending your base you need to make sure your APCs are recalled to base so that your strongest heroes are guarding the city gate and all of your troops are part of your defensive strength. If you are being rally attacked, you can teleport your base to dodge the rally attack before it lands. After an enemy attacks your base, you can send your troops out to attack their APC immediately after once they are weakened instead of fighting them at full strength.` },
-      { title: 'Attacking players', markdown: `There are several ways to attack a player who is stronger than you for a higher chance of success.\n\n## Defeating a Base\nWhen an enemy player teleports near you, don't attack the base immediately as it will be at full defensive strength. Wait for them to send out their APCs before striking at their base while their defenses are weaker, as the heroes and troops that remain won't be as strong and you will take less troop injuries during the attack.\n\n## Attacking APCs\nWhen fighting enemy APCs that are stronger than you, wait until after they attack a target like a base or another APC, then attack them to take advantage of their weakened state. You can also attack the same APC with multiple players at once to do a lot more damage and each take less troop injuries.\n\n## Ambushing players who are rallying\nWhen you see that enemy players are rallying, wait for the rally troops to leave their base and then strike their bases immediately while they are weakly defended, or attack their APCs when they return from the rally and are weakened.` },
-      { title: 'Attacking objectives', markdown: `When you want to attack an objective like a Turret, communicate with your alliance members to launch several rallies at the same time against that target. You want them all to land as close together as possible so that the enemy does not have time to reinforce with fresh troops between attacks. Because of this, you can keep APCs parked next to objectives so that if they are attacked you can rapidly reinfore with additional troops without having to wait for marching time.` },
-      { title: 'Healing Efficiently', markdown: `Hitting 'Select All' and healing all of your troops at once forces you to use speedups. Instead you should select a smaller number of troops, such as 30 minutes worth of troops to heal. All of your alliance members will help you finish this within seconds and you can do this a few times in a row to heal all of your troops without wasting speedups.` },
+      { title: 'Defending your base', path: 'defending-base', markdownFile: '/CombatTips_DefendingBase.md' },
+      { title: 'Attacking players', path: 'attacking-players', markdownFile: '/CombatTips_AttackingPlayers.md' },
+      { title: 'Attacking objectives', path: 'attacking-objectives', markdownFile: '/CombatTips_AttackingObjectives.md' },
+      { title: 'Healing Efficiently', path: 'healing-efficiently', markdownFile: '/CombatTips_HealingEfficiently.md' },
     ]
   },
   // {
   //   name: 'How To Get Stronger',
+  //   path: 'how-to-get-stronger',
   //   sections: [
-  //     { title: 'Improve your defense', markdown: `# Weapons\nFind and upgrade weapons.` },
-  //     { title: 'APC Strength', markdown: `# Armor\nProtect yourself with armor.` }
+  //     { title: 'Improve your defense', path: 'improve-defense', markdownFile: '/HowToGetStronger_ImproveDefense.md' },
+  //     { title: 'APC Strength', path: 'apc-strength', markdownFile: '/HowToGetStronger_APCStrength.md' }
   //   ]
   // },
   {
-    name: 'Other Events',
+    name: 'Season 2',
+    path: 'season-2',
     sections: [
-      { title: 'Coming Soon', markdown: `We're working on it!` },
+      { title: 'Season 2 Overview', path: 'overview', markdownFile: '/Season2_Overview.md' },
+      // { title: 'Week 1', path: 'week-1', markdownFile: '/Season2_Week1.md' },
+      // { title: 'Week 2', path: 'week-2', markdownFile: '/Season2_Week2.md' },
+      // { title: 'Week 3', path: 'week-3', markdownFile: '/Season2_Week3.md' },
+    ]
+  },
+  {
+    name: 'Events',
+    path: 'events',
+    sections: [
+      { title: 'Coming Soon', path: 'coming-soon', markdownFile: '/Events_ComingSoon.md' },
+    ]
+  },
+  {
+    name: 'Other Resources',
+    path: 'other-resources',
+    sections: [
+      { title: 'Links', path: 'links', markdownFile: '/OtherResources_Links.md' },
     ]
   }
 ];
 
 function App() {
-  const [selected, setSelected] = useState({cat: 0, sec: 0});
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AppContent />} />
+        <Route path="/:categoryPath/:sectionPath" element={<AppContent />} />
+        {/* Redirect routes */}
+        {Object.entries(redirects).map(([from, to]) => (
+          <Route key={from} path={from} element={<Navigate to={to} replace />} />
+        ))}
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function AppContent() {
+  const [markdown, setMarkdown] = useState('');
+  const navigate = useNavigate();
+  
+  // Get category and section from URL params
+  const { categoryPath = 'getting-started', sectionPath = 'introduction' } = useParams();
+  
+  // Find category and section by path
+  const category = categories.find(cat => cat.path === categoryPath) || categories[0];
+  const section = category.sections.find(sec => sec.path === sectionPath) || category.sections[0];
+  
+  const selectedSection = section;
 
   const handleSelect = (catIdx, secIdx) => {
-    setSelected({cat: catIdx, sec: secIdx});
+    const category = categories[catIdx];
+    const section = category.sections[secIdx];
+    navigate(`/${category.path}/${section.path}`);
   };
 
-  const selectedSection = categories[selected.cat].sections[selected.sec];
+  useEffect(() => {
+    const fetchMarkdown = async () => {
+      try {
+        const response = await fetch(selectedSection.markdownFile);
+        if (!response.ok) throw new Error('Markdown file not found');
+        const text = await response.text();
+        setMarkdown(text);
+      } catch (err) {
+        setMarkdown('Error loading content.');
+      }
+    };
+    fetchMarkdown();
+  }, [selectedSection]);
 
   return (
     <div className="app-container">
@@ -67,7 +149,7 @@ function App() {
                   <li
                     key={sec.title}
                     className={
-                      selected.cat === catIdx && selected.sec === secIdx
+                      category.path === categories[catIdx].path && section.path === categories[catIdx].sections[secIdx].path
                         ? 'active'
                         : ''
                     }
@@ -84,7 +166,91 @@ function App() {
       </div>
       <main className="main-content">
         <h1>{selectedSection.title}</h1>
-        <ReactMarkdown>{selectedSection.markdown}</ReactMarkdown>
+        
+        {/* Quick Navigation Tiles - Only show on Introduction page */}
+        {selectedSection.path === 'introduction' && (
+          <div className="tile-grid">
+            <div 
+              className="tile-button" 
+              onClick={() => {
+                const category = categories.find(cat => cat.path === 'server-rules');
+                const section = category.sections.find(sec => sec.path === 'current-rules');
+                const catIdx = categories.indexOf(category);
+                const secIdx = category.sections.indexOf(section);
+                handleSelect(catIdx, secIdx);
+              }}
+            >
+              <h3>📋 Server Rules</h3>
+              <p>Learn about NAP10 rules, current server policies, and recent changes</p>
+            </div>
+            
+            <div 
+              className="tile-button" 
+              onClick={() => {
+                const category = categories.find(cat => cat.path === 'season-2');
+                const section = category.sections.find(sec => sec.path === 'overview');
+                const catIdx = categories.indexOf(category);
+                const secIdx = category.sections.indexOf(section);
+                handleSelect(catIdx, secIdx);
+              }}
+            >
+              <h3>🎯 Season 2 Tips</h3>
+              <p>Master the latest season with weekly guides and advanced strategies</p>
+            </div>
+            
+            <div 
+              className="tile-button" 
+              onClick={() => {
+                const category = categories.find(cat => cat.path === 'combat-tips');
+                const section = category.sections.find(sec => sec.path === 'defending-base');
+                const catIdx = categories.indexOf(category);
+                const secIdx = category.sections.indexOf(section);
+                handleSelect(catIdx, secIdx);
+              }}
+            >
+              <h3>⚔️ Basic Tips</h3>
+              <p>Essential combat strategies for attacking, defending, and healing</p>
+            </div>
+          </div>
+        )}
+        
+        <ReactMarkdown 
+          components={{
+            a: ({ href, children }) => {
+              if (href && href.startsWith('/')) {
+                return (
+                  <a 
+                    href={href} 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // Parse the path to find category and section
+                      const pathParts = href.split('/').filter(Boolean);
+                      if (pathParts.length >= 2) {
+                        const categoryPath = pathParts[0];
+                        const sectionPath = pathParts[1];
+                        const category = categories.find(cat => cat.path === categoryPath);
+                        if (category) {
+                          const section = category.sections.find(sec => sec.path === sectionPath);
+                          if (section) {
+                            const catIdx = categories.indexOf(category);
+                            const secIdx = category.sections.indexOf(section);
+                            handleSelect(catIdx, secIdx);
+                          }
+                        }
+                      }
+                    }}
+                    style={{ color: '#d31c20', textDecoration: 'underline', cursor: 'pointer' }}
+                  >
+                    {children}
+                  </a>
+                );
+              }
+              return <a href={href}>{children}</a>;
+            }
+          }}
+        >
+          {markdown}
+        </ReactMarkdown>
       </main>
     </div>
   );
