@@ -1,0 +1,1 @@
+This is one of our most important events as a server, and determines who will be in charge as the president. We can all participate in the capital clash event to earn points for our alliances, and we need to make sure that an alliance we trust to take care of the server wins the overall event. 

@@ -1,0 +1,222 @@
+body, .app-container {
+  background: #000002;
+  color: #cfcfd1;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 270px;
+  background: #390405;
+  border-right: 3px solid #d31c20;
+  padding: 24px 12px 24px 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100vh;
+}
+
+.sidebar h2 {
+  color: #d31c20;
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.category {
+  margin-bottom: 10px;
+}
+
+.category-title {
+  color: #cfcfd1;
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 1.1rem;
+}
+
+.category ul {
+  list-style: none;
+  padding: 0 0 0 10px;
+  margin: 0;
+}
+
+.category li {
+  padding: 6px 10px;
+  margin-bottom: 2px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  color: #cfcfd1;
+}
+
+.category li.active, .category li:hover {
+  background: #5a0b0c;
+  color: #d31c20;
+  font-weight: bold;
+}
+
+.category-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.footer {
+  flex-shrink: 0;
+  width: 100%;
+  text-align: center;
+  color: #cfcfd1bb;
+  font-size: 1rem;
+  padding: 18px 0 0 0;
+  opacity: 0.7;
+  background: none;
+}
+
+.main-content {
+  flex: 1;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #000002;
+  min-width: 0;
+}
+
+.main-content h1 {
+  color: #d31c20;
+  font-size: 2.2rem;
+  margin-bottom: 18px;
+}
+
+.placeholder-img {
+  border-radius: 12px;
+}
+
+/* Tile Button Styles */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 32px 0;
+  width: 100%;
+}
+
+.tile-button {
+  background: linear-gradient(135deg, #390405 0%, #5a0b0c 100%);
+  border: 2px solid #d31c20;
+  border-radius: 12px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tile-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(211, 28, 32, 0.3);
+  border-color: #ff4444;
+  background: linear-gradient(135deg, #4a0506 0%, #6b0c0d 100%);
+}
+
+.tile-button h3 {
+  color: #d31c20;
+  margin: 0 0 12px 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.tile-button p {
+  color: #cfcfd1;
+  margin: 0;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.translate-widget {
+  position: absolute;
+  top: 18px;
+  right: 32px;
+  z-index: 9999;
+}
+
+.site-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #cfcfd1;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+  text-align: left;
+}
+
+@media (max-width: 800px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 3px solid #d31c20;
+    flex-direction: column;
+    overflow-x: auto;
+    padding: 12px 6px;
+    min-width: 0;
+    height: auto;
+    max-height: 50vh;
+  }
+  .site-title {
+    font-size: 1.3rem;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  .main-content {
+    padding: 18px 8px;
+    font-size: 1rem;
+  }
+  .translate-widget {
+    right: 8px;
+    top: 8px;
+    left: unset;
+    width: 100vw;
+    text-align: right;
+  }
+  .category-list {
+    max-height: 30vh;
+  }
+  .footer {
+    font-size: 0.95rem;
+    padding: 12px 0 0 0;
+  }
+  
+  .tile-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  
+  .tile-button {
+    padding: 20px;
+    min-height: 140px;
+  }
+  
+  .tile-button h3 {
+    font-size: 1.2rem;
+  }
+  
+  .tile-button p {
+    font-size: 0.95rem;
+  }
+}
