@@ -64,9 +64,9 @@ const categories = [
     path: 'season-2',
     sections: [
       { title: 'Season 2 Overview', path: 'overview', markdownFile: '/Season2_Overview.md' },
-      // { title: 'Week 1', path: 'week-1', markdownFile: '/Season2_Week1.md' },
-      // { title: 'Week 2', path: 'week-2', markdownFile: '/Season2_Week2.md' },
-      // { title: 'Week 3', path: 'week-3', markdownFile: '/Season2_Week3.md' },
+      { title: 'Week 1', path: 'week-1', markdownFile: '/Season2_Week1.md' },
+      { title: 'Week 2', path: 'week-2', markdownFile: '/Season2_Week2.md' },
+      { title: 'Week 3', path: 'week-3', markdownFile: '/Season2_Week3.md' },
     ]
   },
   {
